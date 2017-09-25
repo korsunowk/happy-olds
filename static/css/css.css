@@ -1,0 +1,119 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1050px;
+    margin: 0 auto;
+    padding-top: 22px;
+}
+
+form#dates {
+    width: 300px;
+    height: auto;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.generate-block {
+    padding: 5px;
+    width: 300px;
+    border: 1px solid black;
+}
+
+.generate-block span {
+    font-size: 19px;
+}
+
+.choose-times {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    display: flex;
+    justify-content: space-between;
+}
+
+label:nth-child(2), label:nth-child(5) {
+    margin-top: 15px;
+}
+
+.submit {
+    margin-top: 15px;
+}
+
+.calendar {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.weekdays {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    align-self: center;
+}
+
+.weeks {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-self: center;
+}
+
+.week {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.day {
+    border: 2px solid black;
+    height: 60px;
+    width: 100px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.olds-count {
+    font-size: 20px;
+}
+
+.olds-block {
+    display: none;
+    width: auto;
+    height: auto;
+
+    background-color: white;
+    z-index: 2;
+    border: 1px solid black;
+    margin-top: 3px;
+    width: 350px;
+}
+
+.open {
+    display: block;
+}
+
+a.button {
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    padding: 15px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+a.button:hover {
+    background-color: #F5F5F5;
+}
+
+a.button:nth-child(2) {
+    margin-left: 5px;
+}

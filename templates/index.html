@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href='{% static "css/css.css" %}'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static 'js.js' %}"></script>
+    <title>Happy Olds</title>
+</head>
+<body>
+    <div class="header">
+        <form id="dates" action="/" method="GET">
+            <div class="chose-times">
+                <label for="start-time">
+                    Start date
+                    <input id="start-time" type="date" name="start_date" value='{{ start_date|date:"Y-m-d" }}' required>
+                </label>
+                <label for="end-time">
+                    End date
+                    <input id="end-time" type="date" name="end_date" value='{{ end_date|date:"Y-m-d" }}' required>
+                </label>
+            </div>
+            <input type="submit" class="submit">
+        </form>
+        <div class="generate-block">
+            <form action="generate/" method="GET">
+                <label for="olds_start">
+                    Olds from:
+                    <input id="olds_start" type="number" name="olds_start" required>
+                </label>
+                <label for="olds_end">
+                    Olds to:
+                    <input id="olds_end" type="number" name="olds_end" required>
+                </label>
+                <br>
+                <label for="visits_start">
+                    Visits from:
+                    <input id="visits_start" type="number" name="visits_start" required>
+                </label>
+                <label for="visits_end">
+                    Visits to:
+                    <input id="visits_end" type="number" name="visits_end" required>
+                </label>
+                <br>
+                <input type="submit" class="submit" value="Generate data">
+            </form>
+        </div>
+
+        <div class="buttons">
+            <a class="button" href="http://174.138.81.19/admin/olds/old/add/">Add the new old</a>
+            <a class="button" href="http://174.138.81.19/admin/boarding_visit/boardingvisit/add/">Add the new visit</a>
+        </div>
+    </div>
+
+    {% if calendar %}
+         <div class="calendar">
+             <div class="weekdays">
+                {% for weekday in weekdays %}
+                    <div class="weekday">{{ weekday }}</div>
+                {% endfor %}
+             </div>
+
+             <div class="weeks">
+                 {% for week in calendar %}
+                    <div class="week">
+                        {% for date in week %}
+                            <div class="day">
+                                {% if date %}
+
+                                    <span class="day-num">{{ date.date|date:"M d" }}</span>
+                                    <br>
+                                    <span class="olds-count">{{ date.count }} olds</span>
+
+                                    <div class="olds-block">
+                                        {% for visit in date.olds %}
+                                            <span class="old">{{ visit }}</span><br><hr>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                 {% endfor %}
+             </div>
+
+         </div>
+    {% endif %}
+
+</body>
+</html>
