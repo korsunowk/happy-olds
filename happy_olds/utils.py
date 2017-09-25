@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from old.forms import Old, OldForm
 from boarding_visit.forms import BoardingVisit, BoardingVisitForm
 
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import random
 from faker import Faker
 
@@ -34,6 +34,8 @@ def generate_fake_data(request):
     olds_range = []
     visits_range = []
 
+    now_year = datetime.today().year
+
     for _ in range(random.randint(50, 500)):
         form = OldForm(data=dict(
             first_name=fake.first_name(),
@@ -49,12 +51,12 @@ def generate_fake_data(request):
         )
 
         start_date = random_date(
-            start=date(year=2016, month=1, day=1),
-            end=date(year=2016, month=12, day=31)
+            start=date(year=now_year, month=1, day=1),
+            end=date(year=now_year, month=12, day=31)
         )
         end_date = random_date(
             start=start_date,
-            end=date(year=2016, month=12, day=31)
+            end=date(year=now_year, month=12, day=31)
         )
 
         form = BoardingVisitForm(data=dict(
