@@ -18,5 +18,14 @@ class Old(models.Model):
 
         return "{0} {1}".format(self.first_name, self.last_name)
 
+    @classmethod
+    def full_name_check(cls, old_name):
+        """
+        The class method for check the unique full_name of a Old model
+        :param old_name: the dict with first/last name of the Old object
+        :return: True if free, False if already exists
+        """
+        return not cls.objects.filter(**old_name).exists()
+
     def __str__(self):
         return self.full_name
