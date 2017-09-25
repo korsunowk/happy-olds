@@ -28,20 +28,20 @@
             <form action="generate/" method="GET">
                 <label for="olds_start">
                     Olds from:
-                    <input id="olds_start" type="number" name="olds_start" required>
+                    <input id="olds_start" type="number" name="olds_start" min="0" max="500" required>
                 </label>
                 <label for="olds_end">
                     Olds to:
-                    <input id="olds_end" type="number" name="olds_end" required>
+                    <input id="olds_end" type="number" name="olds_end" min="0" max="500" required>
                 </label>
                 <br>
                 <label for="visits_start">
                     Visits from:
-                    <input id="visits_start" type="number" name="visits_start" required>
+                    <input id="visits_start" type="number" name="visits_start" min="0" max="500" required>
                 </label>
                 <label for="visits_end">
                     Visits to:
-                    <input id="visits_end" type="number" name="visits_end" required>
+                    <input id="visits_end" type="number" name="visits_end" min="0" max="500" required>
                 </label>
                 <br>
                 <input type="submit" class="submit" value="Generate data">

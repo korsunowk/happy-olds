@@ -31,12 +31,18 @@ def generate_fake_data(request):
     Old.objects.all().delete()
     BoardingVisit.objects.all().delete()
 
-    olds_range = []
-    visits_range = []
+    olds_range = [
+        int(request.GET.get('olds_start', 0)),
+        int(request.GET.get('olds_end', 100))
+    ]
+    visits_range = [
+        int(request.GET.get('visits_start', 0)),
+        int(request.GET.get('visits_end', 100))
+    ]
 
     now_year = datetime.today().year
 
-    for _ in range(random.randint(50, 500)):
+    for _ in range(random.randint(olds_range[0], olds_range[1])):
         form = OldForm(data=dict(
             first_name=fake.first_name(),
             last_name=fake.last_name()
@@ -45,7 +51,7 @@ def generate_fake_data(request):
         if form.is_valid():
             form.save()
 
-    for _ in range(random.randint(50, 500)):
+    for _ in range(random.randint(visits_range[0], visits_range[1])):
         old = Old.objects.get(
             pk=random.randint(Old.objects.first().pk, Old.objects.last().pk)
         )
