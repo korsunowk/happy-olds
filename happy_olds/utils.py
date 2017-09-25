@@ -25,7 +25,7 @@ def generate_fake_data(request):
     The method for generating randomly and fake data
     for Olds and Visits models
     :param request: django request object
-    :return: HttpResponse
+    :return: redirect to homepage
     """
     fake = Faker()
     Old.objects.all().delete()
