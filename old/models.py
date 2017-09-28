@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -26,6 +27,11 @@ class Old(models.Model):
         :return: True if free, False if already exists
         """
         return not cls.objects.filter(**old_name).exists()
+
+    def clean(self):
+        valid_name = Old.full_name_check(old_name={'first_name': self.first_name, 'last_name': self.last_name})
+        if not valid_name:
+            raise ValidationError('Full name of the Old must be unique.')
 
     def __str__(self):
         return self.full_name

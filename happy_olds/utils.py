@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
-from old.forms import Old, OldForm
+from old.models import Old
 from boarding_visit.forms import BoardingVisit, BoardingVisitForm
 
 from datetime import date, timedelta, datetime
@@ -43,13 +43,10 @@ def generate_fake_data(request):
     now_year = datetime.today().year
 
     for _ in range(random.randint(olds_range[0], olds_range[1])):
-        form = OldForm(data=dict(
+        Old.objects.create(
             first_name=fake.first_name(),
             last_name=fake.last_name()
-        ))
-
-        if form.is_valid():
-            form.save()
+        )
 
     for _ in range(random.randint(visits_range[0], visits_range[1])):
         old = Old.objects.get(
