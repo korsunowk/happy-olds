@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
@@ -31,7 +32,7 @@ class Old(models.Model):
     def clean(self):
         valid_name = Old.full_name_check(old_name={'first_name': self.first_name, 'last_name': self.last_name})
         if not valid_name:
-            raise ValidationError('Full name of the Old must be unique.')
+            raise ValidationError(_('Full name of the Old must be unique.'))
 
     def __str__(self):
         return self.full_name

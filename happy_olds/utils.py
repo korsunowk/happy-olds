@@ -1,8 +1,9 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from old.models import Old
-from boarding_visit.forms import BoardingVisit, BoardingVisitForm
+from boarding_visit.models import BoardingVisit
 
 from datetime import date, timedelta, datetime
 import random
@@ -43,10 +44,13 @@ def generate_fake_data(request):
     now_year = datetime.today().year
 
     for _ in range(random.randint(olds_range[0], olds_range[1])):
-        Old.objects.create(
-            first_name=fake.first_name(),
-            last_name=fake.last_name()
-        )
+        try:
+            Old.objects.create(
+                first_name=fake.first_name(),
+                last_name=fake.last_name()
+            )
+        except ValidationError:
+            continue
 
     for _ in range(random.randint(visits_range[0], visits_range[1])):
         old = Old.objects.get(
@@ -62,13 +66,13 @@ def generate_fake_data(request):
             end=date(year=now_year, month=12, day=31)
         )
 
-        form = BoardingVisitForm(data=dict(
-            old=old,
-            start_date=start_date,
-            end_date=end_date
-        ))
-
-        if form.is_valid():
-            form.save()
+        try:
+            BoardingVisit.objects.create(
+                old=old,
+                start_date=start_date,
+                end_date=end_date
+            )
+        except ValidationError:
+            continue
 
     return redirect(to=reverse_lazy('home_page'))

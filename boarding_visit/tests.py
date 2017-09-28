@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
 
-from boarding_visit.forms import BoardingVisitForm, BoardingVisit
-from old.tests import OLD_TEST_DATA, OldForm, Old
+from boarding_visit.models import BoardingVisit
+from old.tests import OLD_TEST_DATA, Old
 
 from datetime import date, timedelta
 
@@ -29,9 +30,9 @@ class BoardingVisitFormTest(TestCase):
         Test method for create test olds
         """
         for data in OLD_TEST_DATA:
-            form = OldForm(data=data)
-            form.is_valid()
-            form.save()
+            Old.objects.create(
+                **data
+            )
 
     def test_successful(self):
         """
@@ -40,9 +41,10 @@ class BoardingVisitFormTest(TestCase):
         self.create_test_olds()
 
         for data in self.valid_data:
-            form = BoardingVisitForm(data=data)
-            self.assertTrue(form.is_valid())
-            form.save()
+            visit = BoardingVisit.objects.create(
+                **data
+            )
+            self.assertIsInstance(visit, BoardingVisit)
         self.assertEqual(self.valid_data.__len__(), BoardingVisit.objects.count())
 
     def test_fails(self):
@@ -53,16 +55,20 @@ class BoardingVisitFormTest(TestCase):
         self.create_test_olds()
 
         for data in self.valid_data:
-            form = BoardingVisitForm(data=data)
-            form.save()
+            BoardingVisit.objects.create(
+                **data
+            )
 
         fails = 0
         for data in self.fail_data:
-            form = BoardingVisitForm(data=data)
-            if not form.is_valid():
+            try:
+                BoardingVisit.objects.create(
+                    **data
+                )
+            except ValidationError:
                 fails += 1
 
-            self.assertFalse(form.is_valid())
+        self.assertEqual(BoardingVisit.objects.count(), fails)
 
 
 class BoardingVisitViewTest(TestCase):
@@ -100,8 +106,9 @@ class BoardingVisitViewTest(TestCase):
         visit_data = BoardingVisitFormTest.VALID_DATA
 
         for data in visit_data:
-            form = BoardingVisitForm(data=data)
-            form.save()
+            BoardingVisit.objects.create(
+                **data
+            )
 
         response = self.client.get('/', data={
             'start_date': visit_data[0]['start_date'],

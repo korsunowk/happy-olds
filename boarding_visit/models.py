@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from old.models import Old
@@ -28,3 +29,16 @@ class BoardingVisit(models.Model):
         db_table = _('boarding_visits')
         verbose_name = _('boarding visit')
         verbose_name_plural = _('boarding visits')
+
+    def clean(self):
+        if self.start_date > self.end_date:
+            raise ValidationError(_('Start date must be before end date.'))
+
+        old = self.old
+        start_date = self.start_date
+        end_date = self.end_date
+
+        for dates in BoardingVisit.get_visits(old, excluded=self):
+            if dates['start'] <= start_date <= dates['end'] \
+                    or dates['start'] <= end_date <= dates['end']:
+                raise ValidationError(_('The new dates falls into the existing date range.'))
