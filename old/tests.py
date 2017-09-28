@@ -1,6 +1,7 @@
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 
-from old.forms import OldForm, Old
+from old.models import Old
 
 # Create your tests here.
 
@@ -25,9 +26,10 @@ class OldModelTest(TestCase):
         Test for success create of 3 Old objects
         """
         for data in self.test_data:
-            form = OldForm(data=data)
-            self.assertTrue(form.is_valid())
-            form.save()
+            old = Old.objects.create(
+                **data
+            )
+            self.assertIsInstance(old, Old)
 
         self.assertEqual(self.test_data.__len__(), Old.objects.count())
 
@@ -36,16 +38,19 @@ class OldModelTest(TestCase):
         Test for testings fails creating the Old objects
         """
         for data in self.test_data:
-            form = OldForm(data=data)
-            self.assertTrue(form.is_valid())
-            form.save()
+            old = Old.objects.create(
+                **data
+            )
+            self.assertIsInstance(old, Old)
 
         fails = 0
         for data in self.fail_data:
-            form = OldForm(data=data)
-
-            if not form.is_valid():
+            try:
+                old = Old.objects.create(
+                    **data
+                )
+                self.assertIsInstance(old, Old)
+            except ValidationError:
                 fails += 1
-            self.assertFalse(form.is_valid())
 
         self.assertEqual(Old.objects.count(), fails)
