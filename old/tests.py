@@ -33,7 +33,7 @@ class OldModelTest(TestCase):
         """
         self.assertEqual(self.test_data.__len__(), Old.objects.count())
 
-    def test_create_olds_with_the_same_names__must_3_errors(self):
+    def test_create__olds_with_the_same_names__must_3_errors(self):
         """
         Test for testings fails creating the Old objects
         """
