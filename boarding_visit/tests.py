@@ -16,8 +16,8 @@ class BoardingVisitFormTest(TestCase):
     """
     TEST_DATE = date(year=2016, month=10, day=5)
     VALID_DATA = [
-        {'old': 1, 'start_date': TEST_DATE, 'end_date': TEST_DATE + timedelta(days=3)},
-        {'old': 2, 'start_date': TEST_DATE, 'end_date': TEST_DATE + timedelta(days=5)},
+        {'old_id': 1, 'start_date': TEST_DATE, 'end_date': TEST_DATE + timedelta(days=3)},
+        {'old_id': 2, 'start_date': TEST_DATE, 'end_date': TEST_DATE + timedelta(days=5)},
     ]
 
     def setUp(self):

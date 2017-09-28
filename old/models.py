@@ -34,5 +34,10 @@ class Old(models.Model):
         if not valid_name:
             raise ValidationError(_('Full name of the Old must be unique.'))
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.clean()
+        return super(Old, self).save(force_insert, force_update, using, update_fields)
+
     def __str__(self):
         return self.full_name

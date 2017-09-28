@@ -42,3 +42,8 @@ class BoardingVisit(models.Model):
             if dates['start'] <= start_date <= dates['end'] \
                     or dates['start'] <= end_date <= dates['end']:
                 raise ValidationError(_('The new dates falls into the existing date range.'))
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.clean()
+        return super(BoardingVisit, self).save(force_insert, force_update, using, update_fields)
