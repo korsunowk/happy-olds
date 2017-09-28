@@ -53,10 +53,6 @@ def generate_fake_data(request):
             continue
 
     for _ in range(random.randint(visits_range[0], visits_range[1])):
-        old = Old.objects.get(
-            pk=random.randint(Old.objects.first().pk, Old.objects.last().pk)
-        )
-
         start_date = random_date(
             start=date(year=now_year, month=1, day=1),
             end=date(year=now_year, month=12, day=31)
@@ -68,7 +64,7 @@ def generate_fake_data(request):
 
         try:
             BoardingVisit.objects.create(
-                old=old,
+                old_id=random.randint(Old.objects.first().pk, Old.objects.last().pk),
                 start_date=start_date,
                 end_date=end_date
             )
