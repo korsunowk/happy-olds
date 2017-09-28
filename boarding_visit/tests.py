@@ -24,21 +24,15 @@ class BoardingVisitFormTest(TestCase):
         self.valid_data = self.VALID_DATA
         self.fail_data = self.valid_data
 
-    @staticmethod
-    def create_test_olds():
-        """
-        Test method for create test olds
-        """
         for data in OLD_TEST_DATA:
             Old.objects.create(
                 **data
             )
 
-    def test_successful(self):
+    def test_create__boardingvisit_objects__must_2(self):
         """
         Simple test for successful create the new BoardingVisit objects
         """
-        self.create_test_olds()
 
         for data in self.valid_data:
             visit = BoardingVisit.objects.create(
@@ -47,12 +41,10 @@ class BoardingVisitFormTest(TestCase):
             self.assertIsInstance(visit, BoardingVisit)
         self.assertEqual(self.valid_data.__len__(), BoardingVisit.objects.count())
 
-    def test_fails(self):
+    def test_create__the_same_boardingvisits_objects__must_2_errors(self):
         """
         Test error with start and end dates
         """
-
-        self.create_test_olds()
 
         for data in self.valid_data:
             BoardingVisit.objects.create(
@@ -76,7 +68,16 @@ class BoardingVisitViewTest(TestCase):
     The few tests for views with BoardingVisit and Old logic
     """
 
-    def test_simple_get_homepage(self):
+    def setUp(self):
+        """
+        Create the Olds objects for the test
+        """
+        for data in OLD_TEST_DATA:
+            Old.objects.create(
+                **data
+            )
+
+    def test_simple_get_homepage__check_header(self):
         """
         Simple test with GET request
         and check the 'Happy Olds' header is exist
@@ -102,7 +103,6 @@ class BoardingVisitViewTest(TestCase):
         Test with creating the olds, visits and check
         them on the homepage with sent parameters
         """
-        BoardingVisitFormTest.create_test_olds()
         visit_data = BoardingVisitFormTest.VALID_DATA
 
         for data in visit_data:
