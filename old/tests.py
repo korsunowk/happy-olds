@@ -21,28 +21,22 @@ class OldModelTest(TestCase):
 
         self.fail_data = self.test_data
 
-    def test_success_create(self):
-        """
-        Test for success create of 3 Old objects
-        """
         for data in self.test_data:
             old = Old.objects.create(
                 **data
             )
             self.assertIsInstance(old, Old)
 
+    def test_count___old_after_setup__must_3(self):
+        """
+        Test for get count of Olds objects after the setUp method
+        """
         self.assertEqual(self.test_data.__len__(), Old.objects.count())
 
-    def test_fail_create(self):
+    def test_create_olds_with_the_same_names__must_3_errors(self):
         """
         Test for testings fails creating the Old objects
         """
-        for data in self.test_data:
-            old = Old.objects.create(
-                **data
-            )
-            self.assertIsInstance(old, Old)
-
         fails = 0
         for data in self.fail_data:
             try:
