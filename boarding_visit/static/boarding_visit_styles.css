@@ -81,25 +81,6 @@ label:nth-child(2), label:nth-child(5) {
     cursor: pointer;
 }
 
-.olds-count {
-    font-size: 20px;
-}
-
-.olds-block {
-    display: none;
-    width: auto;
-    height: auto;
-
-    background-color: white;
-    z-index: 2;
-    border: 1px solid black;
-    margin-top: 3px;
-    width: 350px;
-}
-
-.open {
-    display: block;
-}
 
 a.button {
     text-decoration: none;
